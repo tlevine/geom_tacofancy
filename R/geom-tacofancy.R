@@ -30,9 +30,9 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 directory <- function(directory.name) {
   fn <- '.tmp.json'
   url <- paste0('http://www.randomtaco.me/', directory.name, '/')
-# download.file(url, fn)
+  download.file(url, fn)
   xs <- fromJSON(fn)
-# file.remove(fn)
+  file.remove(fn)
   unname(sapply(xs, function(x) { x['slug'] }))
 }
 
@@ -41,10 +41,10 @@ cached.directories <- function() {
   if (file.exists(fn)) {
     load(fn)
   } else {
-    directory.names <- c('base_layer', 'mixin', 'condiment', 'seasoning', 'shell')
-    options <- lapply(directory.names, directory)
-    names(options) <- directory.names
-    save(options, file = '.geom_tacofancy.rda')
+    directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
+    directories <- lapply(directory.names, directory)
+    names(directories) <- directory.names
+    save(directories, file = '.geom_tacofancy.rda')
   }
   directories
 }
