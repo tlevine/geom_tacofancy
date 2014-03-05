@@ -11,6 +11,7 @@ Windows users also must first install
 # Example
 
 ```{r dsamp}
+options(width = 200)
 library(geomtacofancy)
 ggplot(mpg) +
   aes(label = paste(manufacturer, model), base_layer = manufacturer, condiments = trans, x = hwy, y = cty) +

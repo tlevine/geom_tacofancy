@@ -7,4 +7,4 @@ install:
 	R CMD INSTALL .
 
 docs:
-	Rscript -e 'library(knitr); library(geomtacofancy); knit("README.Rmd")'
+	Rscript -e 'library(knitr); library(geomtacofancy); knit("README.Rmd", quiet = TRUE)'
