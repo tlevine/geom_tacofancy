@@ -1,5 +1,5 @@
 Package: geomtacofancy
-Version: 3.2.8
+Version: 0.0.1
 Date: 2014-02-10
 Title: A taco geom for ggplot
 Author: person("Thomas", "Levine",
