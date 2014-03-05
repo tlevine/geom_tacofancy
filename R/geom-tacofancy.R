@@ -10,7 +10,7 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
   draw_groups <- function(., ...) .$draw(...)
   draw <- function(., data, scales, coordinates, na.rm = FALSE, ...) {    
 
-    convert.vec <- function(vec, slugs, name) {
+    convert.vec <- function(vec, slugs, naoe) {
       new.vec <- factor(vec)
       if (length(levels(new.vec)) > length(slugs)) {
         stop('Too many different values for ', name)
@@ -58,13 +58,13 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 
     # Replace this with do.call eventually.
     recipes <- data.frame(
+      label = data$label,
       url = paste('http://www.randomtaco.me',
         mapped.data$base_layers, mapped.data$mixins,
         mapped.data$condiments, mapped.data$seasonings,
         mapped.data$shells, '',
         sep = '/')
     )
-    rownames(recipes) <- data$label
     print(recipes)
   }
 

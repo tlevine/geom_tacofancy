@@ -13,6 +13,6 @@ Windows users also must first install
 ```{r dsamp}
 library(geomtacofancy)
 ggplot(mpg) +
-  aes(label = paste(manufacturer, model), mixins = manufacturer, condiments = trans, x = hwy, y = cty) +
-  geom_text() + geom_tacofancy(base_layer = 'baked_tilapia')
+  aes(label = paste(manufacturer, model), base_layer = manufacturer, condiments = trans, x = hwy, y = cty) +
+  geom_text() + geom_tacofancy()
 ```
