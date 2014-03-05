@@ -1,0 +1,6 @@
+.gitignore
+roxygen
+README.*
+figure
+.Rhistory
+stata/

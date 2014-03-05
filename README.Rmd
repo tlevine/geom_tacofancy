@@ -1,0 +1,18 @@
+# Install 
+
+```r
+library("devtools")
+install_github("geomtacofancy", "csv")
+```
+
+Windows users also must first install
+[Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
+ 
+# Example
+
+```{r dsamp}
+library(geomtacofancy)
+ggplot(mpg) +
+  aes(label = paste(manufacturer, model), fill = trans, cilantro = TRUE, x = hwy, y = cty) +
+  geom_text() + geom_tacofancy()
+```

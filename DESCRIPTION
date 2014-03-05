@@ -1,0 +1,18 @@
+Package: geomtaco
+Version: 3.2.8
+Date: 2014-02-10
+Title: A taco geom for ggplot
+Authors@R: c(
+  person("Thomas", "Levine",
+    role = c("aut", "cre"),
+    email = "_@thomaslevine.com")
+Depends:
+    R (>= 2.14),
+    ggplot2 (>= 0.9.2),
+    RJSONIO (>= 1.0-3)
+Imports:
+    proto
+Description: add tacofancy tacos to your plots
+License: AGPL
+URL: http://github.com/tlevine/geom_tacofancy
+BugReports: http://github.com/tlevine/geom_tacofancy
