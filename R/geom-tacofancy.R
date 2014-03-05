@@ -9,6 +9,37 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 
   draw_groups <- function(., ...) .$draw(...)
   draw <- function(., data, scales, coordinates, na.rm = FALSE, ...) {    
+
+    convert.vec <- function(vec, slugs, name) {
+      new.vec <- factor(vec)
+      if (length(levels(new.vec)) > length(slugs)) {
+        stop('Too many different values for ', name)
+      }
+      levels(new.vec) <- slugs
+      new.vec
+    }
+    
+    directory <- function(directory.name) {
+      fn <- '.tmp.json'
+      url <- paste0('http://www.randomtaco.me/', directory.name, '/')
+      download.file(url, fn)
+      xs <- fromJSON(fn)
+      file.remove(fn)
+      unname(sapply(xs, function(x) { x['slug'] }))
+    }
+    
+    cached.directories <- function(directory.names) {
+      fn <- '.geom_tacofancy.rda' 
+      if (file.exists(fn)) {
+        load(fn)
+      } else {
+        directories <- lapply(directory.names, directory)
+        names(directories) <- directory.names
+        save(directories, file = '.geom_tacofancy.rda')
+      }
+      directories
+    }
+
     directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
 
     data <- remove_missing(data, na.rm, 
@@ -48,34 +79,3 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
     salsa = 1, lime = FALSE, radish = FALSE,
     guacamole = FALSE, cilantro = FALSE)
 })
-
-
-convert.vec <- function(vec, slugs, name) {
-  new.vec <- factor(vec)
-  if (length(levels(new.vec)) > length(slugs)) {
-    stop('Too many different values for ', name)
-  }
-  levels(new.vec) <- slugs
-  new.vec
-}
-
-directory <- function(directory.name) {
-  fn <- '.tmp.json'
-  url <- paste0('http://www.randomtaco.me/', directory.name, '/')
-  download.file(url, fn)
-  xs <- fromJSON(fn)
-  file.remove(fn)
-  unname(sapply(xs, function(x) { x['slug'] }))
-}
-
-cached.directories <- function(directory.names) {
-  fn <- '.geom_tacofancy.rda' 
-  if (file.exists(fn)) {
-    load(fn)
-  } else {
-    directories <- lapply(directory.names, directory)
-    names(directories) <- directory.names
-    save(directories, file = '.geom_tacofancy.rda')
-  }
-  directories
-}
