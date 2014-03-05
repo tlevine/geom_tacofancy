@@ -68,14 +68,8 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
     print(recipes)
   }
 
-  draw_legend <- function(., data, ...) {
-    data <- aesdefaults(data, .$default_aes(), list(...))
-  }
-
+  draw_legend <- function(., data, ...) {}
   default_stat <- function(.) StatIdentity
   required_aes <- c()
-  default_aes <- function(.) aes(
-    fill = 'carne asada', label = Sys.info()[["user"]],
-    salsa = 1, lime = FALSE, radish = FALSE,
-    guacamole = FALSE, cilantro = FALSE)
+  default_aes <- function(.) list()
 })
