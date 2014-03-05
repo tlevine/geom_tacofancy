@@ -30,10 +30,10 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 directory <- function(directory.name) {
   fn <- '.tmp.json'
   url <- paste0('http://www.randomtaco.me/', directory.name, '/')
-  download.file(url, fn)
-  things <- fromJSON(fn)
-  file.remove(fn)
-
+# download.file(url, fn)
+  xs <- fromJSON(fn)
+# file.remove(fn)
+  unname(sapply(xs, function(x) { x['slug'] }))
 }
 
 cached.directories <- function() {
