@@ -15,13 +15,22 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
       c("label", directory.names), name = "geom_tacofancy")
     if (empty(data)) return(zeroGrob())
     directories <- cached.directories()
+    mapped.data <- data.frame(label = data$label)
     for (col in names(directories)) {
-      data[,col] <- convert.vec(data[,col], directories[[col]], col)
+      if (col %in% names(data)) {
+        mapped.data[,col] <- convert.vec(data[,col], directories[[col]], col)
+      } else {
+        mapped.data[,col] <- convert.vec(rep(TRUE, nrow(data)), directories[[col]], col)
+      }
     }
 
     # Replace this with do.call eventually.
     recipes <- data.frame(
-      url = paste('http://www.randomtaco.me', data$base_layers, data$mixins, data$condiments, data$seasonings, data$shells, '', sep = '/')
+      url = paste('http://www.randomtaco.me',
+        mapped.data$base_layers, mapped.data$mixins,
+        mapped.data$condiments, mapped.data$seasonings,
+        mapped.data$shells, '',
+        sep = '/')
     )
     rownames(recipes) <- data$label
     print(recipes)

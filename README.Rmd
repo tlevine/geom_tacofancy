@@ -2,7 +2,7 @@
 
 ```r
 library("devtools")
-install_github("geomtacofancy", "csv")
+install_github("geomtacofancy", "tlevine")
 ```
 
 Windows users also must first install
@@ -13,6 +13,6 @@ Windows users also must first install
 ```{r dsamp}
 library(geomtacofancy)
 ggplot(mpg) +
-  aes(label = paste(manufacturer, model), fill = trans, cilantro = TRUE, x = hwy, y = cty) +
-  geom_text() + geom_tacofancy()
+  aes(label = paste(manufacturer, model), mixins = manufacturer, condiments = trans, x = hwy, y = cty) +
+  geom_text() + geom_tacofancy(base_layer = 'baked_tilapia')
 ```
