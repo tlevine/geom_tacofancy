@@ -1,5 +1,3 @@
-directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
-
 geom_tacofancy <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity",
 na.rm = FALSE, ...) {
   GeomTacoFancy$new(mapping = mapping, data = data, stat = stat, position = position, 
@@ -11,10 +9,13 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 
   draw_groups <- function(., ...) .$draw(...)
   draw <- function(., data, scales, coordinates, na.rm = FALSE, ...) {    
+    directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
+
     data <- remove_missing(data, na.rm, 
       c("label", directory.names), name = "geom_tacofancy")
     if (empty(data)) return(zeroGrob())
-    directories <- cached.directories()
+
+    directories <- cached.directories(directory.names)
     mapped.data <- data.frame(label = data$label)
     for (col in names(directories)) {
       if (col %in% names(data)) {
@@ -67,7 +68,7 @@ directory <- function(directory.name) {
   unname(sapply(xs, function(x) { x['slug'] }))
 }
 
-cached.directories <- function() {
+cached.directories <- function(directory.names) {
   fn <- '.geom_tacofancy.rda' 
   if (file.exists(fn)) {
     load(fn)
