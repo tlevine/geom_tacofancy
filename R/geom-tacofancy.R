@@ -40,7 +40,7 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
 })
 
 
-convert.vec(vec, slugs, name) {
+convert.vec <- function(vec, slugs, name) {
   new.vec <- factor(vec)
   if (length(levels(new.vec)) > length(slugs)) {
     stop('Too many different values for ', name)

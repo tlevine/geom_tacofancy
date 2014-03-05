@@ -1,6 +1,3 @@
-export(geom_taco)
-import(colorspace)
+export(geom_tacofancy)
 import(ggplot2)
-import(grid)
 import(proto)
-import(scales)
