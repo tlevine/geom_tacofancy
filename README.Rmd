@@ -10,12 +10,12 @@ Windows users also must first install
  
 # Example
 
-```{r dsamp}
+```{r mpg}
 options(width = 200)
 library(geomtacofancy)
 ggplot(mpg) +
-  aes(label = paste(manufacturer, model), base_layer = manufacturer, condiments = trans) +
-  geom_tacofancy()
+  aes(label = paste(manufacturer, model), base_layer = manufacturer, condiments = trans, x = hwy, y = cty) +
+   geom_tacofancy()
 ```
 
 # For added dimensionality
