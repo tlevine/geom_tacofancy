@@ -1,3 +1,5 @@
+directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
+
 geom_tacofancy <- function (mapping = NULL, data = NULL, stat = "identity", position = "identity",
 na.rm = FALSE, ...) {
   GeomTacoFancy$new(mapping = mapping, data = data, stat = stat, position = position, 
@@ -10,9 +12,19 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
   draw_groups <- function(., ...) .$draw(...)
   draw <- function(., data, scales, coordinates, na.rm = FALSE, ...) {    
     data <- remove_missing(data, na.rm, 
-      c("label","fill","salsa","lime","radish","guacamole","cilantro"), name = "geom_tacofancy")
+      c("label", directory.names), name = "geom_tacofancy")
     if (empty(data)) return(zeroGrob())
-    cat(url)
+    directories <- cached.directories()
+    for (col in names(directories)) {
+      data[,col] <- convert.vec(data[,col], directories[[col]], col)
+    }
+
+    # Replace this with do.call eventually.
+    recipes <- data.frame(
+      url = paste('http://www.randomtaco.me', data$base_layers, data$mixins, data$condiments, data$seasonings, data$shells, '', sep = '/')
+    )
+    rownames(recipes) <- data$label
+    print(recipes)
   }
 
   draw_legend <- function(., data, ...) {
@@ -26,6 +38,16 @@ GeomTacoFancy <- proto(ggplot2:::Geom, {
     salsa = 1, lime = FALSE, radish = FALSE,
     guacamole = FALSE, cilantro = FALSE)
 })
+
+
+convert.vec(vec, slugs, name) {
+  new.vec <- factor(vec)
+  if (length(levels(new.vec)) > length(slugs)) {
+    stop('Too many different values for ', name)
+  }
+  levels(new.vec) <- slugs
+  new.vec
+}
 
 directory <- function(directory.name) {
   fn <- '.tmp.json'
@@ -41,7 +63,6 @@ cached.directories <- function() {
   if (file.exists(fn)) {
     load(fn)
   } else {
-    directory.names <- c('base_layers', 'mixins', 'condiments', 'seasonings', 'shells')
     directories <- lapply(directory.names, directory)
     names(directories) <- directory.names
     save(directories, file = '.geom_tacofancy.rda')
